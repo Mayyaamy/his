@@ -143,6 +143,7 @@ CREATE TABLE prescription (
     visit_id        BIGINT       NOT NULL,
     prescribed_at   DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     total_amount    DECIMAL(10,2) NOT NULL DEFAULT 0,
+    dispense_status VARCHAR(20)  NOT NULL DEFAULT 'PENDING' COMMENT 'PENDING/DISPENSED',
     created_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
@@ -202,5 +203,8 @@ CREATE TABLE bill_item (
     PRIMARY KEY (id),
     KEY idx_bi_bill (bill_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COMMENT '账单明细';
+
+-- 兼容已有数据库：新增 dispense_status 列
+ALTER TABLE prescription ADD COLUMN IF NOT EXISTS dispense_status VARCHAR(20) NOT NULL DEFAULT 'PENDING' COMMENT 'PENDING/DISPENSED' AFTER total_amount;
 
 SET FOREIGN_KEY_CHECKS = 1;

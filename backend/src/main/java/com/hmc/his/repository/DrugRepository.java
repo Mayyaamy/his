@@ -33,4 +33,7 @@ public interface DrugRepository {
 
     @Delete("DELETE FROM drug WHERE id = #{id}")
     int deleteById(Long id);
+
+    @Update("UPDATE drug SET stock = stock - #{qty} WHERE id = #{drugId} AND stock >= #{qty}")
+    int deductStock(@Param("drugId") Long drugId, @Param("qty") Integer qty);
 }
