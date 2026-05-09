@@ -29,4 +29,20 @@ public interface PrescriptionRepository {
             "VALUES(#{prescriptionId}, #{drugId}, #{dosage}, #{frequency}, #{days}, #{qty}, #{unitPrice}, #{subtotal})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insertItem(PrescriptionItem item);
+
+    @Select("SELECT p.*, b.bill_no, b.status AS bill_status, " +
+            "       pt.name AS patient_name, pt.gender AS patient_gender, " +
+            "       dct.name AS doctor_name, r.reg_no " +
+            "FROM prescription p " +
+            "LEFT JOIN bill b ON b.prescription_id = p.id " +
+            "LEFT JOIN visit v ON v.id = p.visit_id " +
+            "LEFT JOIN registration r ON r.id = v.registration_id " +
+            "LEFT JOIN patient pt ON pt.id = r.patient_id " +
+            "LEFT JOIN doctor dct ON dct.id = r.doctor_id " +
+            "WHERE b.status = 'PAID' AND p.dispense_status = 'PENDING' " +
+            "ORDER BY p.id ASC")
+    List<Prescription> selectDispenseQueue();
+
+    @Update("UPDATE prescription SET dispense_status = #{status} WHERE id = #{id}")
+    int updateDispenseStatus(@Param("id") Long id, @Param("status") String status);
 }

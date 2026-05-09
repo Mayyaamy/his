@@ -32,13 +32,15 @@ public class DataInitializer implements CommandLineRunner {
             return;
         }
 
-        log.info("初始化默认账号：admin / reception / doctor，密码均为 123456");
+        log.info("初始化默认账号：admin / reception / doctor / pharmacist，密码均为 123456");
         SysUser admin = newUser("admin", "123456", "系统管理员", "ADMIN");
         SysUser reception = newUser("reception", "123456", "前台挂号员", "RECEPTION");
         SysUser doctorUser = newUser("doctor", "123456", "张医生", "DOCTOR");
+        SysUser pharmacist = newUser("pharmacist", "123456", "药房药师", "PHARMACIST");
         userRepository.insert(admin);
         userRepository.insert(reception);
         userRepository.insert(doctorUser);
+        userRepository.insert(pharmacist);
 
         if (doctorRepository.countAll() == 0) {
             log.info("初始化示例医生记录");

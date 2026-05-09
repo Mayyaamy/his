@@ -39,6 +39,20 @@ const routes = [
         component: () => import('@/views/reception/RegistrationList.vue'),
         meta: { title: '挂号查询', icon: 'List', roles: ['ADMIN', 'RECEPTION'], group: '挂号台' }
       },
+      {
+        path: 'reception/billing',
+        name: 'reception-billing',
+        component: () => import('@/views/reception/Billing.vue'),
+        meta: { title: '收费台', icon: 'Money', roles: ['ADMIN', 'RECEPTION'], group: '挂号台' }
+      },
+
+      // 药房
+      {
+        path: 'pharmacy/dispense',
+        name: 'pharmacy-dispense',
+        component: () => import('@/views/pharmacy/Dispense.vue'),
+        meta: { title: '发药', icon: 'Goods', roles: ['ADMIN', 'PHARMACIST'], group: '药房' }
+      },
 
       // 医生工作站
       {

@@ -7,21 +7,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class Prescription {
+public class Bill {
     private Long id;
-    private Long visitId;
-    private LocalDateTime prescribedAt;
+    private String billNo;
+    private Long prescriptionId;
     private BigDecimal totalAmount;
-    private String dispenseStatus;
+    /** PENDING / PAID / REFUNDED */
+    private String status;
+    private LocalDateTime paidAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    /** 关联明细（非数据库列） */
-    private List<PrescriptionItem> items;
-
-    /** 发药队列展示字段（非数据库列） */
-    private String billNo;
-    private String billStatus;
+    /** 关联展示字段（非数据库列） */
+    private List<BillItem> items;
     private String patientName;
     private String patientGender;
     private String doctorName;
